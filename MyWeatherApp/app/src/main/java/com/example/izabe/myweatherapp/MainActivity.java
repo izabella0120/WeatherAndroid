@@ -134,13 +134,13 @@ public class MainActivity extends AppCompatActivity {
             String nameOfTheCity=apiEvents.weather.getName();
             Double temperatureInKelvins=apiEvents.weather.getMain().getTemp();
 
-            public Double KalvinsToCel(){
-                Double temperarureInCelsius=temperatureInKelvins-273;
-            }
+//            public Double KalvinsToCel(){
+//                Double temperarureInCelsius=temperatureInKelvins-273;
+//            }
 
 
 
-            ListItem weather = new ListItem(nameOfTheCity, KalvinsToCel);
+            ListItem weather = new ListItem(nameOfTheCity, temperatureInKelvins);
             listItems.add(weather);
             adapter=new WeatherAdapter(listItems);
             recyclerView.setAdapter(adapter);

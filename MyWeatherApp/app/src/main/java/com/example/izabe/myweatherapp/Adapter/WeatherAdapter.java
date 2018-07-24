@@ -1,11 +1,9 @@
 package com.example.izabe.myweatherapp.Adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.izabe.myweatherapp.R;
@@ -17,12 +15,8 @@ import java.util.List;
  */
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHolder>{
-    EditText wpisz_miasto;
-    TextView article_tittle;
-
 
     List<ListItem> listItems;
-    private Context context;
 
     public WeatherAdapter(List<ListItem> listItems) {
         this.listItems = listItems;
@@ -41,7 +35,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHo
         ListItem listItem = listItems.get(position);
 
         holder.mTittle.setText(listItem.getCity_name());
-        holder.mContent.setText(listItem.getTemperature());
+        holder.mContent.setText(listItem.getTemperature().toString());
 
     }
 
@@ -55,7 +49,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHo
         public TextView mContent;
         public MyViewHolder(View itemView){
             super(itemView);
-            wpisz_miasto.getText();
             mTittle = (TextView) itemView.findViewById(R.id.city_title);
             mContent = (TextView) itemView.findViewById((R.id.current_temperature_field));
 

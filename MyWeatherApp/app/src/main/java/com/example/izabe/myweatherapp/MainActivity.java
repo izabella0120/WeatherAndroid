@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public String city_name;
     public String temperature;
 
+
     Typeface weatherFont;
 
     Button button;
@@ -72,21 +73,21 @@ public class MainActivity extends AppCompatActivity {
         current_temperature_field = (TextView) findViewById(R.id.current_temperature_field);
         weather_icon = (TextView) findViewById(R.id.weather_icon) ;
 
-        weather_icon.setTypeface(weatherFont);
+        //weather_icon.setTypeface(weatherFont);
+        listItems = new ArrayList<>();
 
-
-
+        adapter=new WeatherAdapter(listItems);
 
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        adapter=new WeatherAdapter(listItems);
-
+        recyclerView.setAdapter(adapter);
 
 
 
-        listItems = new ArrayList<>();
+
+
+
 
         //loadRecyclerViewData();
 
@@ -104,8 +105,16 @@ public class MainActivity extends AppCompatActivity {
                     taskFragmentsWeather.start(wpisz_miasto.getText().toString());
                 }
 
+
+
             }
         });
+
+//    private void sendMessage(view:View){
+//
+//    }
+
+
 
 
 
@@ -122,13 +131,22 @@ public class MainActivity extends AppCompatActivity {
 
             Example apiType = apiEvents.weather;
 
+            String nameOfTheCity=apiEvents.weather.getName();
+            Double temperatureInKelvins=apiEvents.weather.getMain().getTemp();
+
+            public Double KalvinsToCel(){
+                Double temperarureInCelsius=temperatureInKelvins-273;
+            }
 
 
 
-
-            ListItem weather = new ListItem(city_name, temperature);
+            ListItem weather = new ListItem(nameOfTheCity, KalvinsToCel);
             listItems.add(weather);
+            adapter=new WeatherAdapter(listItems);
+            recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
+
+
 
 
 //                LayoutUpdate();

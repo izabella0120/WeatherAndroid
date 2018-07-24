@@ -7,9 +7,9 @@ package com.example.izabe.myweatherapp.Adapter;
 public class ListItem {
 
     private String city_name;
-    private String temperature;
+    private Double temperature;
 
-    public ListItem(String city_name, String temperature) {
+    public ListItem(String city_name, Double temperature) {
         this.city_name = city_name;
         this.temperature = temperature;
     }
@@ -18,7 +18,7 @@ public class ListItem {
         return city_name;
     }
 
-    public String getTemperature() {
+    public Double getTemperature() {
         return temperature;
     }
 
@@ -26,7 +26,7 @@ public class ListItem {
         this.city_name = city_name;
     }
 
-    public void setTemperature(String temperature) {
+    public void setTemperature(Double temperature) {
         this.temperature = temperature;
     }
 }

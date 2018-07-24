@@ -6,19 +6,27 @@ package com.example.izabe.myweatherapp.Adapter;
 
 public class ListItem {
 
-    private String my_article_tittle;
-    private String my_article_subtittle;
+    private String city_name;
+    private String temperature;
 
-    public ListItem(String my_article_tittle, String my_article_subtittle) {
-        this.my_article_tittle = my_article_tittle;
-        this.my_article_subtittle = my_article_subtittle;
+    public ListItem(String city_name, String temperature) {
+        this.city_name = city_name;
+        this.temperature = temperature;
     }
 
-    public String getMy_article_tittle() {
-        return my_article_tittle;
+    public String getCity_name() {
+        return city_name;
     }
 
-    public String getMy_article_subtittle() {
-        return my_article_subtittle;
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setCity_name(String city_name) {
+        this.city_name = city_name;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
     }
 }

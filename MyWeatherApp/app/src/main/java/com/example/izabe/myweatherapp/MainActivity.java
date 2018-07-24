@@ -1,56 +1,156 @@
 package com.example.izabe.myweatherapp;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.izabe.myweatherapp.Adapter.ListItem;
 import com.example.izabe.myweatherapp.Adapter.WeatherAdapter;
+import com.example.izabe.myweatherapp.Api.ApiEvents;
+import com.example.izabe.myweatherapp.Enum.EApiType;
+import com.example.izabe.myweatherapp.Models.Example;
+import com.example.izabe.myweatherapp.TaskFragments.TaskFragmentsWeather;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    public MainActivity() {
+    }
+
+    public String city_name;
+    public String temperature;
+
+    Typeface weatherFont;
+
     Button button;
     EditText wpisz_miasto;
+    TextView city_title;
+    TextView current_temperature_field;
+    TextView weather_icon;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-
+    TaskFragmentsWeather taskFragmentsWeather;
     private List<ListItem> listItems;
 
+    public MainActivity(String city_name, String temperature) {
+        this.city_name = city_name;
+        this.temperature = temperature;
+    }
 
+
+    public String getTemperature() {
+
+        return temperature;
+    }
+
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         button = (Button) findViewById(R.id.button);
         wpisz_miasto = (EditText) findViewById(R.id.wpisz_miasto);
-        wpisz_miasto.getText();
+        city_name=wpisz_miasto.getText().toString();
+        city_title = (TextView) findViewById(R.id.city_title);
+        current_temperature_field = (TextView) findViewById(R.id.current_temperature_field);
+        weather_icon = (TextView) findViewById(R.id.weather_icon) ;
+
+        weather_icon.setTypeface(weatherFont);
+
+
+
 
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        adapter=new WeatherAdapter(listItems);
+
+
+
+
         listItems = new ArrayList<>();
 
-        for(int i =0; i<=10; i++){
-            ListItem listItem = new ListItem(
+        //loadRecyclerViewData();
 
-            );
 
-            listItems.add(listItem);
+        EventBus.getDefault().register(this);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(taskFragmentsWeather!=null)
+                    taskFragmentsWeather.start(wpisz_miasto.getText().toString());
+                else
+                {
+                    taskFragmentsWeather=new TaskFragmentsWeather();
+                    taskFragmentsWeather.start(wpisz_miasto.getText().toString());
+                }
+
+            }
+        });
+
+
+
+
+
+
+
+
         }
 
-        adapter = new WeatherAdapter(listItems, this);
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onApiEvents(ApiEvents apiEvents) {
+        if( apiEvents.apiType == EApiType.WEATHER){
 
-        recyclerView.setAdapter(adapter);
+            Example apiType = apiEvents.weather;
+
+
+
+
+
+            ListItem weather = new ListItem(city_name, temperature);
+            listItems.add(weather);
+            adapter.notifyDataSetChanged();
+
+
+//                LayoutUpdate();
+//                ConfirmationHider();
+//                LoadingStatus(false);
+//                initializeOrderList();
+//                initializeTaxList();
+
+        }
+    }
+
+//        private void loadRecyclerViewData(){
+//            ProgressDialog progressDialog = new ProgressDialog(this);
+//            progressDialog.setMessage("Ładuję dane...");
+//            progressDialog.show();
+//        }
+
+
+
+
+
+
 
     }
-}
+

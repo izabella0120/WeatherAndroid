@@ -5,20 +5,29 @@
 
 
     <TextView
-        android:id="@+id/article_title"
+        android:id="@+id/city_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Title"
+        android:text=""
         android:textColor="#333"
-        android:textSize="20sp" />
+        android:textSize="40sp" />
 
     <TextView
-        android:id="@+id/article_subtitle"
+        android:id="@+id/current_temperature_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Subtitle"
-        android:textColor="#888"
-        android:textSize="14sp" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/weather_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="70sp" />
 
 </LinearLayout>

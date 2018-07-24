@@ -24,9 +24,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHo
     List<ListItem> listItems;
     private Context context;
 
-    public WeatherAdapter(List<ListItem> listItems, Context context) {
+    public WeatherAdapter(List<ListItem> listItems) {
         this.listItems = listItems;
-        this.context = context;
     }
 
     @Override
@@ -41,8 +40,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHo
 
         ListItem listItem = listItems.get(position);
 
-        holder.mTittle.setText(listItem.getMy_article_tittle());
-        holder.mContent.setText(listItem.getMy_article_subtittle());
+        holder.mTittle.setText(listItem.getCity_name());
+        holder.mContent.setText(listItem.getTemperature());
 
     }
 
@@ -57,8 +56,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHo
         public MyViewHolder(View itemView){
             super(itemView);
             wpisz_miasto.getText();
-            mTittle = (TextView) itemView.findViewById(R.id.article_title);
-            mContent = (TextView) itemView.findViewById((R.id.article_subtitle));
+            mTittle = (TextView) itemView.findViewById(R.id.city_title);
+            mContent = (TextView) itemView.findViewById((R.id.current_temperature_field));
 
         }
 

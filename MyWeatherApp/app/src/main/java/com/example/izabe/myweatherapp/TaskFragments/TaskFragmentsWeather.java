@@ -1,8 +1,12 @@
 package com.example.izabe.myweatherapp.TaskFragments;
 
 
+import com.example.izabe.myweatherapp.Api.ApiEvents;
+import com.example.izabe.myweatherapp.Enum.EApiType;
 import com.example.izabe.myweatherapp.Interfaces.OnWeatherInterface;
 import com.example.izabe.myweatherapp.Models.Example;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,17 +24,21 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class TaskFragmentsWeather {
 
-    private static final String BASE_URL = "https://samples.openweathermap.org/data/2.5";
+    private static final String BASE_URL = "https://api.openweathermap.org/data/2.5";
     private static final String BASE_KEY = "&appid=b642b494740b9fd2698b26f7bd2aa9d4";
+    private static final String IMG_URL = "http://openweathermap.org/img/w/";
 
     public String  get_URL(String city){
+
         StringBuilder temptext=new StringBuilder();
-        temptext.append("weather?q="+city + BASE_KEY);
+        temptext.append("weather?q="+ city + BASE_KEY);
 //        Uri.Builder my_URL = new Uri.Builder();
 //        my_URL.appendPath("weather").appendQueryParameter("q",city);
         //String test = my_URL.toString();
         return temptext.toString();
     }
+
+
 
     public void start(final String city) {
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -40,14 +48,16 @@ public class TaskFragmentsWeather {
 
 
 
-        Retrofit retrofit = new Retrofit.Builder()
+        final Retrofit retrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl("https://samples.openweathermap.org/data/2.5/")
+                .baseUrl("https://api.openweathermap.org/data/2.5/")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
 
-        OnWeatherInterface onWeatherInterface = retrofit.create(OnWeatherInterface.class);
+
+
+        final OnWeatherInterface onWeatherInterface = retrofit.create(OnWeatherInterface.class);
 
         onWeatherInterface.loadChanges(get_URL(city)).enqueue(new Callback<Example>(){
             @Override
@@ -55,11 +65,16 @@ public class TaskFragmentsWeather {
                 if(response.body() != null){
                     Example example = new Example();
                     example = response.body();
-
+                    EventBus.getDefault().post(new ApiEvents(EApiType.WEATHER ,response.body()));
 
                 }
 
+
+
             }//odp z serwera
+
+
+
 
 
 

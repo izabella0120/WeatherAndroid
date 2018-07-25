@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         //weather_icon.setTypeface(weatherFont);
         listItems = new ArrayList<>();
 
-        adapter=new WeatherAdapter(listItems);
+        adapter=new WeatherAdapter(getApplicationContext(),listItems);
 
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     taskFragmentsWeather=new TaskFragmentsWeather();
                     taskFragmentsWeather.start(wpisz_miasto.getText().toString());
                 }
+                wpisz_miasto.setText("");
 
 
 
@@ -133,16 +134,14 @@ public class MainActivity extends AppCompatActivity {
 
             String nameOfTheCity=apiEvents.weather.getName();
             Double temperatureInKelvins=apiEvents.weather.getMain().getTemp();
-
-//            public Double KalvinsToCel(){
-//                Double temperarureInCelsius=temperatureInKelvins-273;
-//            }
+            KalvinsToCel(temperatureInKelvins);
+            String description = apiEvents.weather.getWeather().get(0).getMain();
 
 
 
-            ListItem weather = new ListItem(nameOfTheCity, temperatureInKelvins);
+            ListItem weather = new ListItem(nameOfTheCity, KalvinsToCel(temperatureInKelvins), description);
             listItems.add(weather);
-            adapter=new WeatherAdapter(listItems);
+            adapter=new WeatherAdapter(getApplicationContext(),listItems);
             recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
 
@@ -156,6 +155,15 @@ public class MainActivity extends AppCompatActivity {
 //                initializeTaxList();
 
         }
+    }
+
+
+
+    public double KalvinsToCel(double inKelvins){
+
+        double tempInCelsius=inKelvins-273;
+        return tempInCelsius;
+
     }
 
 //        private void loadRecyclerViewData(){

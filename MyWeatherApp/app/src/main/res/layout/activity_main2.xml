@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+
+    <TextClock
+        android:id="@+id/time"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:textSize="25sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        />
+
+    <TextView
+        android:id="@+id/weather_icon2"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:textSize="40sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/city_title2"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:textSize="25sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/current_temperature_field2"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:textSize="25sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"/>
+
+
+
+
+
+</LinearLayout>

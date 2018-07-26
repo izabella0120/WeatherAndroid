@@ -71,6 +71,10 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHo
 
 
 
+
+
+
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView mTittle;
         public TextView mContent;

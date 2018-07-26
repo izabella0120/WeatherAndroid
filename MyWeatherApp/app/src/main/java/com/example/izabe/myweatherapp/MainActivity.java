@@ -3,18 +3,19 @@ package com.example.izabe.myweatherapp;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.izabe.myweatherapp.Adapter.ListItem;
 import com.example.izabe.myweatherapp.Adapter.WeatherAdapter;
 import com.example.izabe.myweatherapp.Api.ApiEvents;
 import com.example.izabe.myweatherapp.Enum.EApiType;
+import com.example.izabe.myweatherapp.Fragments.WeatherFragment;
 import com.example.izabe.myweatherapp.Models.Example;
 import com.example.izabe.myweatherapp.TaskFragments.TaskFragmentsWeather;
 
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     TextView city_title;
     TextView current_temperature_field;
     TextView weather_icon;
+    LinearLayout list_item;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -58,6 +60,18 @@ public class MainActivity extends AppCompatActivity {
         return temperature;
     }
 
+//    public void text_m(View view){
+//        city_title.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v){
+//                Main2Activity main2Activity = new Main2Activity(MainActivity.this, .class )
+//            }
+//
+//        });
+//
+//    }
+
 
     public void setTemperature(String temperature) {
         this.temperature = temperature;
@@ -73,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         city_title = (TextView) findViewById(R.id.city_title);
         current_temperature_field = (TextView) findViewById(R.id.current_temperature_field);
         weather_icon = (TextView) findViewById(R.id.weather_icon) ;
+        list_item = (LinearLayout) findViewById(R.id.list_item) ;
 
         //weather_icon.setTypeface(weatherFont);
         listItems = new ArrayList<>();
@@ -82,9 +97,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.HORIZONTAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(adapter);
+
+        //dodac recyclerView.divider
+
+        WeatherFragment weatherFragment = new WeatherFragment();
 
 
 
@@ -116,20 +133,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//    private void sendMessage(view:View){
-//
-//    }
 
 
+        if(findViewById(R.id.list_item) != null){
+            if(savedInstanceState != null){
+                return;
+            }
 
-
-
-
-
-
-
-
+            WeatherFragment weatherFragment1 = new WeatherFragment();
+            weatherFragment1.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,weatherFragment1).commit();
         }
+
+
+
+
+
+
+
+
+
+}
+
+    public void onClickItem(View view){
+
+
+
+    }
+
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onApiEvents(ApiEvents apiEvents) {
@@ -153,12 +185,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//                LayoutUpdate();
-//                ConfirmationHider();
-//                LoadingStatus(false);
-//                initializeOrderList();
-//                initializeTaxList();
-
         }
     }
 
@@ -171,11 +197,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//        private void loadRecyclerViewData(){
-//            ProgressDialog progressDialog = new ProgressDialog(this);
-//            progressDialog.setMessage("Ładuję dane...");
-//            progressDialog.show();
-//        }
+//    public void changeFragment(){
+//        getFragmentManager().beginTransaction().replace(R.id.list_item, new WeatherFragment().addToBackStack(null).commit();
+//    }
 
 
 

@@ -24,7 +24,8 @@ android:text="Sprawdź pogodę" />
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:textSize="40dp"/>
+        android:divider="@drawable/custom_shape"
+        android:dividerHeight="10dp"/>
 
 </LinearLayout>
 
